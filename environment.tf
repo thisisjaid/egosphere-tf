@@ -33,12 +33,6 @@ resource "aws_subnet" "egosphere-web" {
   map_public_ip_on_launch = true
 }
 
-# Create and assign an Elastic IP so we always have the same external IP
-
-resource "aws_eip" "egosphere_ip" {
-  instance = "${aws_instance.egosphere_web.id}"
-}
-
 # Create a security group and allow SSH access
 
 resource "aws_security_group" "egosphere" {
@@ -59,16 +53,5 @@ resource "aws_security_group" "egosphere" {
     protocol        = "-1"
     cidr_blocks     = ["0.0.0.0/0"]
   }
-}
-
-# Finally create the actual instance
-
-resource "aws_instance" "egosphere_web" {
-  ami           = "ami-0c1d44089d8a1eeaf"
-  instance_type = "t2.micro"
-  key_name      = "ridd"
-  vpc_security_group_ids = ["${aws_security_group.egosphere.id}"]
-  subnet_id     = "${aws_subnet.egosphere-web.id}"
-
 }
 
