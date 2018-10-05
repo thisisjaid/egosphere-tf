@@ -8,6 +8,13 @@ resource "aws_instance" "egosphere_web" {
     volume_size           = 40
     volume_type           = "standard"
   }
+  provisioner "remote-exec" {
+    inline = [
+      "pacman -Syu",
+      "pacman -S python python-virtualenv",
+    ]
+  }
+
 
 }
 
