@@ -10,8 +10,8 @@ resource "aws_instance" "egosphere_web" {
   }
   provisioner "remote-exec" {
     inline = [
-      "pacman -Syu",
-      "pacman -S python python-virtualenv",
+      "pacman --noconfirm -Syu",
+      "pacman --noconfirm -S python python-virtualenv",
     ]
   }
 
